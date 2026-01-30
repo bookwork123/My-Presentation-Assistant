@@ -21,5 +21,3 @@ def openCamera(camType):
         #NOTE: Press Ctrl+C to end the program at the moment. GUI implementation will add a stop button.
         capture.release()
         cv.destroyAllWindows
-
-openCamera(0)
