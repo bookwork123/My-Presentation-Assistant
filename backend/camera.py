@@ -3,6 +3,7 @@ import numpy as np
 import cv2 as cv
 import time
 
+### Opens the webcam and adds frames to the global queue
 def openCamera(camType, frame_queue):
     #NOTE: camType relates to a value between 0 and 4, 
     #      which itself correlates to the specific camera used by the computer.
