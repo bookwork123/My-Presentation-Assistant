@@ -37,8 +37,10 @@ options = GestureRecognizerOptions(
 def recognizeGesture():
     with GestureRecognizer.create_from_options(options) as recognizer:
         while True:
-            frame, timestamp_ms = frame_queue.get()
-
+            try:
+                frame, timestamp_ms = frame_queue.get()
+            except:
+                continue ###TODO: Add error handling
             mp_image = mp.Image(
                 image_format=mp.ImageFormat.SRGB,
                 data=frame
