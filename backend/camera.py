@@ -2,6 +2,7 @@
 import numpy as np
 import cv2 as cv
 import time
+from queue import Queue
 
 ### Opens the webcam and adds frames to the global queue
 def openCamera(camType, frame_queue):
@@ -20,7 +21,16 @@ def openCamera(camType, frame_queue):
                 print("ERROR: Cannot receive frame. Exiting...")
                 return 2
             
+            frame = cv.cvtColor(frame, cv.COLOR_BGR2RGB)
+
             timestamp_ms = int(time.monotonic() * 1000)
+
+            if frame_queue.full():
+                try:
+                    frame_queue.get_nowait()
+                except:
+                    pass
+
 
             frame_queue.put((frame, timestamp_ms))
     except KeyboardInterrupt:
