@@ -1,3 +1,8 @@
-from recognizer import recognizeGesture
+from mapper import mapper
+import threading
 
-recognizeGesture()
+def main():
+    mapper()
+
+main()
+
