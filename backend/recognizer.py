@@ -23,9 +23,17 @@ GestureRecognizerOptions = mp.tasks.vision.GestureRecognizerOptions
 GestureRecognizerResult = mp.tasks.vision.GestureRecognizerResult
 VisionRunningMode = mp.tasks.vision.RunningMode
 
+
+latest_gesture = None
+
 # Logging function
 def print_result(result: GestureRecognizerResult, output_image: mp.Image, timestamp_ms: int):  # type: ignore
-    print('gesture recognition result: {}'.format(result))
+    global latest_gesture
+    if result.gestures:
+        gesture = result.gestures[0][0]  # First hand, top gesture
+        print("GESTURE: " + gesture.category_name)
+        print("CONFIDENCE: " + str(gesture.score))
+        latest_gesture = gesture.category_name
 
 # Create a gesture recognizer instance with the live stream mode:
 options = GestureRecognizerOptions(
@@ -40,10 +48,9 @@ def recognizeGesture():
             try:
                 frame, timestamp_ms = frame_queue.get()
             except:
-                continue ###TODO: Add error handling
+                continue
             mp_image = mp.Image(
                 image_format=mp.ImageFormat.SRGB,
                 data=frame
             )
-
-            recognizer.recognize_async(mp_image, timestamp_ms)
+            recognizer.recognize_async(mp_image, timestamp_ms)  # result handled by callback
