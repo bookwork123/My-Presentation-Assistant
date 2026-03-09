@@ -1,12 +1,14 @@
 import threading
 import pyautogui
 import recognizer
+import os, signal
 from recognizer import recognizeGesture
 import time
 
 
 
 def mapper():
+    pyautogui.FAILSAFE = False
     t = threading.Thread(
         target=recognizeGesture,
         daemon=True
@@ -33,18 +35,18 @@ def mapper():
 
         # reset latest_gesture for next grab
         recognizer.latest_gesture = None
-        if user_gesture == "Closed_Fist":
+        if user_gesture == "Victory":
             time.sleep(0.8)
             
-            # allows user to hold fist without unpausing - some different gesture must be used to break this loop
-            while recognizer.latest_gesture == "Closed_Fist" or recognizer.latest_gesture is None:
+            # allows user to hold Victory without unpausing - some different gesture must be used to break this loop
+            while recognizer.latest_gesture == "Victory" or recognizer.latest_gesture is None:
                 recognizer.latest_gesture = None
                 time.sleep(0.05)
             
-            # once a diff. gesture has been used, a new Closed_Fist will unpause the program
+            # once a diff. gesture has been used, a new Victory will unpause the program
             while True:
                 new_gesture = recognizer.latest_gesture
-                if new_gesture == "Closed_Fist":
+                if new_gesture == "Victory":
                     recognizer.latest_gesture = None
                     time.sleep(0.8)
                     break
@@ -58,3 +60,11 @@ def mapper():
             pyautogui.press('left')
             print("LEFT!")
             time.sleep(0.8)
+        elif user_gesture == "Open_Palm":
+            pyautogui.press('space')
+            print('SPACE!')
+            time.sleep(0.8)
+        elif user_gesture == "ILoveYou":
+            time.sleep (0.5)
+            pid = os.getpid()
+            os.kill(pid, signal.SIGTERM)
