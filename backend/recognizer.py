@@ -43,12 +43,21 @@ options = GestureRecognizerOptions(
 
 ### Creates the GestureRecognizer object and runs a loop that grabs camera frames and analyzes them
 def recognizeGesture():
+    last_timestamp = -1 # starter value for timestamp check
+
     with GestureRecognizer.create_from_options(options) as recognizer:
         while True:
             try:
                 frame, timestamp_ms = frame_queue.get()
             except:
                 continue
+
+            # ensure newest timestamp is always greater than previous timestamp
+            if timestamp_ms <= last_timestamp:
+                timestamp_ms = last_timestamp + 1
+            last_timestamp = timestamp_ms
+
+
             mp_image = mp.Image(
                 image_format=mp.ImageFormat.SRGB,
                 data=frame
