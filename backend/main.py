@@ -1,8 +1,9 @@
 from mapper import mapper
-import threading
+from audio import initiateAudio
 
 def main():
-    mapper()
+    volume = initiateAudio()
+    mapper(volume)
 
 main()
 
