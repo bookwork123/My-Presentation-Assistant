@@ -12,7 +12,6 @@ def initiateAudio():
     print(f"- Muted: {bool(volume.GetMute())}")
     print(f"- Volume level: {volume.GetMasterVolumeLevel()} dB")
     print(f"- Volume range: {volume.GetVolumeRange()[0]} dB - {volume.GetVolumeRange()[1]} dB")
-    volume.SetMasterVolumeLevel(-20.0, None)
 
     return volume
 
