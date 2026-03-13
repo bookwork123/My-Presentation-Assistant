@@ -3,11 +3,12 @@ import pyautogui
 import recognizer
 import os, signal
 from recognizer import recognizeGesture
+from audio import audioUp, audioDown
 import time
 
 
 
-def mapper():
+def mapper(volume):
     pyautogui.FAILSAFE = False
     t = threading.Thread(
         target=recognizeGesture,
@@ -63,6 +64,12 @@ def mapper():
         elif user_gesture == "Open_Palm":
             pyautogui.press('space')
             print('SPACE!')
+            time.sleep(0.8)
+        elif user_gesture == "Pointing_Up":
+            audioUp(volume)
+            time.sleep(0.8)
+        elif user_gesture == "Closed_Fist":
+            audioDown(volume)
             time.sleep(0.8)
         elif user_gesture == "ILoveYou":
             time.sleep (0.5)
