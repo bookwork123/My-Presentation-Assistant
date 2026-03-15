@@ -3,7 +3,7 @@ import threading
 import mediapipe as mp
 from mediapipe.tasks import python
 from mediapipe.tasks.python import vision
-from camera import openCamera
+from backend.camera import openCamera
 
 # global queue for recognizer to grab frames from
 frame_queue = Queue(maxsize=5)  # small buffer prevents lag
