@@ -28,3 +28,9 @@ def audioDown(volume):
     decrement = 1.0
     new_volume = max(current_volume - decrement, min_volume)
     volume.SetMasterVolumeLevel(new_volume, None)
+
+def audioMute(volume):
+    volume.SetMute(1, None)
+
+def audioUnMute(volume):
+    volume.SetMute(0, None)
