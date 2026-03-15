@@ -1,14 +1,14 @@
 import threading
 import pyautogui
-import recognizer
+import backend.recognizer as recognizer
 import os, signal
-from recognizer import recognizeGesture
-from audio import audioUp, audioDown
+from backend.recognizer import recognizeGesture
+from backend.audio import audioUp, audioDown, audioMute, audioUnMute
 import time
 
 
 
-def mapper(volume):
+def mapper(volume, state):
     pyautogui.FAILSAFE = False
     t = threading.Thread(
         target=recognizeGesture,
@@ -19,7 +19,7 @@ def mapper(volume):
     # Helps prevent duplicate actions
     last_gesture = None
 
-
+    muted = False
     while True:
         user_gesture = recognizer.latest_gesture # grabbed from recognizer
 
@@ -29,6 +29,7 @@ def mapper(volume):
 
         # updates previous gesture to current
         last_gesture = user_gesture
+        state["gesture"] = user_gesture
 
         # prevent extra processing effort
         if user_gesture is None:
@@ -53,24 +54,29 @@ def mapper(volume):
                     break
                 time.sleep(0.05)
 
-        elif user_gesture == "Thumb_Up":
+        elif user_gesture == "Open_Palm":
             pyautogui.press('right')
             print("RIGHT!")
             time.sleep(0.8)
-        elif user_gesture == "Thumb_Down":
+        elif user_gesture == "Closed_Fist":
             pyautogui.press('left')
             print("LEFT!")
             time.sleep(0.8)
-        elif user_gesture == "Open_Palm":
-            pyautogui.press('space')
-            print('SPACE!')
-            time.sleep(0.8)
-        elif user_gesture == "Pointing_Up":
+        elif user_gesture == "Thumb_Up":
             audioUp(volume)
             time.sleep(0.8)
-        elif user_gesture == "Closed_Fist":
+        elif user_gesture == "Thumb_Down":
             audioDown(volume)
             time.sleep(0.8)
+        elif user_gesture == "Pointing_Up":
+            if muted:
+                audioUnMute(volume)
+                muted = False
+                time.sleep(1.2)
+            else:
+                audioMute(volume)
+                muted = True
+                time.sleep(1.2)
         elif user_gesture == "ILoveYou":
             time.sleep (0.5)
             pid = os.getpid()

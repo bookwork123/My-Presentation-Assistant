@@ -1,9 +1,10 @@
-from mapper import mapper
-from audio import initiateAudio
+from backend.mapper import mapper
+from backend.audio import initiateAudio
 
-def main():
+def main(state):
     volume = initiateAudio()
-    mapper(volume)
+    mapper(volume, state)
 
-main()
+if __name__ == "__main__":
+    main(state={})
 
