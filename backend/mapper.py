@@ -12,6 +12,7 @@ def mapper(volume, state):
     pyautogui.FAILSAFE = False
     t = threading.Thread(
         target=recognizeGesture,
+        args=(state,),
         daemon=True
     )
     t.start()

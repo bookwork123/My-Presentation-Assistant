@@ -4,6 +4,8 @@ BAR_HEIGHT = 48
 BAR_COLOR = "#1e1e1e"
 TEXT_COLOR = "#ffffff"
 ACCENT_COLOR = "#4ade80"  # green for active gesture
+ERROR_COLOR = "#f87171"
+
 
 class App:
     def __init__(self, root: tk.Tk, state: dict):
@@ -41,14 +43,21 @@ class App:
                  font=("Helvetica", 11, "bold"), width=14, anchor="w").pack(side="left", padx=(4, 0))
 
         # Close button on the right
-        tk.Label(frame, text="✕", bg=BAR_COLOR, fg="#666666",
-                 font=("Helvetica", 11), cursor="hand2").pack(side="right")
+        close_btn = tk.Label(frame, text="✕", bg=BAR_COLOR, fg="#666666",
+                    font=("Helvetica", 11), cursor="hand2")
+        close_btn.pack(side="right")
+        close_btn.bind("<Button-1>", lambda e: self._close())
 
         # Allow dragging the bar
         frame.bind("<ButtonPress-1>", self._drag_start)
         frame.bind("<B1-Motion>", self._drag_motion)
 
     def _poll(self):
+        if not self.state.get("cam"):
+            self.gesture_var.set("Camera not found")
+            self.dot.config(fg=ERROR_COLOR)
+            self.root.after(50, self._poll)
+            return
         gesture = self.state.get("gesture")
         self.gesture_var.set(gesture or "—")
         self.dot.config(fg=ACCENT_COLOR if gesture else "#444444")
@@ -62,3 +71,7 @@ class App:
         x = event.x_root - self._drag_x
         y = event.y_root - self._drag_y
         self.root.geometry(f"+{x}+{y}")
+
+    def _close(self):
+        self.state["running"] = False
+        self.root.destroy()

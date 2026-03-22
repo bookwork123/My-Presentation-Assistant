@@ -5,7 +5,7 @@ from backend.main import main as backend_main  # aliased to avoid collision
 from frontend.window import App
 
 def main():
-    state = {"gesture": None, "running": True}
+    state = {"gesture": None, "running": True, "cam": True}
 
     threading.Thread(target=backend_main, args=(state,), daemon=True).start()
 

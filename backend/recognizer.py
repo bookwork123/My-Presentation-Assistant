@@ -9,12 +9,7 @@ from backend.camera import openCamera
 frame_queue = Queue(maxsize=5)  # small buffer prevents lag
 model_path = 'C:/Users/oscar/repositories/My-Presentation-Assistant/backend/model/gesture_recognizer.task'
 
-# start camera thread
-threading.Thread(
-    target=openCamera,
-    args=(0, frame_queue),
-    daemon=True
-).start()
+
 
 # Gesture Recognizer configuration
 BaseOptions = mp.tasks.BaseOptions
@@ -42,7 +37,14 @@ options = GestureRecognizerOptions(
     result_callback=print_result)
 
 ### Creates the GestureRecognizer object and runs a loop that grabs camera frames and analyzes them
-def recognizeGesture():
+def recognizeGesture(state):
+
+    # start camera thread
+    threading.Thread(
+        target=openCamera,
+        args=(0, frame_queue, state),
+        daemon=True
+    ).start()
     last_timestamp = -1 # starter value for timestamp check
 
     with GestureRecognizer.create_from_options(options) as recognizer:
