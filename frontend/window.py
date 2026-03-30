@@ -1,4 +1,5 @@
 import tkinter as tk
+import ctypes
 
 BAR_HEIGHT = 48
 BAR_COLOR = "#1e1e1e"
@@ -6,21 +7,30 @@ TEXT_COLOR = "#ffffff"
 ACCENT_COLOR = "#4ade80"  # green for active gesture
 ERROR_COLOR = "#f87171"
 
+gesture_to_emoji = {
+    "Closed_Fist": "✊",
+    "Open_Palm":   "🖐️",
+    "Pointing_Up": "☝️",
+    "Thumb_Down":  "👎",
+    "Thumb_Up":    "👍",
+    "Victory":     "✌️",
+    "ILoveYou":    "🤟",
+    "Unknown":     "❓"
+}
+
 
 class App:
     def __init__(self, root: tk.Tk, state: dict):
         self.root = root
         self.state = state
 
-        # --- Window chrome ---
-        self.root.overrideredirect(True)       # removes title bar / borders
-        self.root.attributes("-topmost", True) # always on top
-        self.root.attributes("-alpha", 0.92)   # slight transparency
+        self.root.overrideredirect(True)
+        self.root.attributes("-topmost", True)
+        self.root.attributes("-alpha", 0.92)
         self.root.configure(bg=BAR_COLOR)
 
-        # Pin to top-center of screen
         sw = self.root.winfo_screenwidth()
-        BAR_WIDTH = 480
+        BAR_WIDTH = 240
         x = (sw - BAR_WIDTH) // 2
         self.root.geometry(f"{BAR_WIDTH}x{BAR_HEIGHT}+{x}+0")
 
@@ -30,6 +40,12 @@ class App:
     def _build_ui(self):
         frame = tk.Frame(self.root, bg=BAR_COLOR)
         frame.pack(fill="both", expand=True, padx=12)
+
+        # Close button first so it claims the right edge
+        close_btn = tk.Label(frame, text="✕", bg=BAR_COLOR, fg="#666666",
+                    font=("Helvetica", 11), cursor="hand2")
+        close_btn.pack(side="right")
+        close_btn.bind("<Button-1>", lambda e: self._close())
 
         # Dot indicator
         self.dot = tk.Label(frame, text="●", bg=BAR_COLOR, fg=ACCENT_COLOR, font=("Helvetica", 10))
@@ -42,13 +58,6 @@ class App:
         tk.Label(frame, textvariable=self.gesture_var, bg=BAR_COLOR, fg=TEXT_COLOR,
                  font=("Helvetica", 11, "bold"), width=14, anchor="w").pack(side="left", padx=(4, 0))
 
-        # Close button on the right
-        close_btn = tk.Label(frame, text="✕", bg=BAR_COLOR, fg="#666666",
-                    font=("Helvetica", 11), cursor="hand2")
-        close_btn.pack(side="right")
-        close_btn.bind("<Button-1>", lambda e: self._close())
-
-        # Allow dragging the bar
         frame.bind("<ButtonPress-1>", self._drag_start)
         frame.bind("<B1-Motion>", self._drag_motion)
 
@@ -59,7 +68,7 @@ class App:
             self.root.after(50, self._poll)
             return
         gesture = self.state.get("gesture")
-        self.gesture_var.set(gesture or "—")
+        self.gesture_var.set(gesture_to_emoji.get(gesture, "—"))
         self.dot.config(fg=ACCENT_COLOR if gesture else "#444444")
         self.root.after(50, self._poll)
 
