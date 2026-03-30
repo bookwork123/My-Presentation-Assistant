@@ -7,7 +7,7 @@ from backend.camera import openCamera
 
 # global queue for recognizer to grab frames from
 frame_queue = Queue(maxsize=5)  # small buffer prevents lag
-model_path = 'C:/Users/oscar/repositories/My-Presentation-Assistant/backend/model/gesture_recognizer.task'
+model_path = 'backend\model\gesture_recognizer.task'
 
 
 
