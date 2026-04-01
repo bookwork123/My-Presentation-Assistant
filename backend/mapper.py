@@ -65,10 +65,10 @@ def mapper(volume, state):
             time.sleep(0.8)
         elif user_gesture == "Thumb_Up":
             audioUp(volume)
-            time.sleep(0.8)
+            time.sleep(0.4)
         elif user_gesture == "Thumb_Down":
             audioDown(volume)
-            time.sleep(0.8)
+            time.sleep(0.4)
         elif user_gesture == "Pointing_Up":
             if muted:
                 audioUnMute(volume)

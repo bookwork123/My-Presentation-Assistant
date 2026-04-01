@@ -18,14 +18,14 @@ def initiateAudio():
 def audioUp(volume):
     current_volume = volume.GetMasterVolumeLevel()
     max_volume = volume.GetVolumeRange()[1]
-    increment = 1.0
+    increment = 2.0
     new_volume = min(current_volume + increment, max_volume)
     volume.SetMasterVolumeLevel(new_volume, None)
 
 def audioDown(volume):
     current_volume = volume.GetMasterVolumeLevel()
     min_volume = volume.GetVolumeRange()[0]
-    decrement = 1.0
+    decrement = 2.0
     new_volume = max(current_volume - decrement, min_volume)
     volume.SetMasterVolumeLevel(new_volume, None)
 
