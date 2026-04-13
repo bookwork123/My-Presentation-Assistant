@@ -46,7 +46,7 @@ This removes `build/` and `dist/`.
 - Primary PyInstaller config is in:
   - `PresentationAssistant.spec`
 
-## Smoke Test Checklist (Packaged App)
+## Packaged App Test Checklist
 
 After building, launch `dist/PresentationAssistant/PresentationAssistant.exe` and validate:
 
