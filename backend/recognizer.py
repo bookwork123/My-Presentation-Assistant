@@ -1,5 +1,7 @@
 from queue import Queue
 import threading
+import os
+import sys
 import mediapipe as mp
 from mediapipe.tasks import python
 from mediapipe.tasks.python import vision
@@ -7,7 +9,17 @@ from backend.camera import openCamera
 
 # global queue for recognizer to grab frames from
 frame_queue = Queue(maxsize=5)  # small buffer prevents lag
-model_path = 'backend\model\gesture_recognizer.task'
+
+
+def _resolve_model_path():
+    # PyInstaller sets sys._MEIPASS to the app extraction/base directory.
+    if hasattr(sys, "_MEIPASS"):
+        return os.path.join(sys._MEIPASS, "backend", "model", "gesture_recognizer.task")
+    project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
+    return os.path.join(project_root, "backend", "model", "gesture_recognizer.task")
+
+
+model_path = _resolve_model_path()
 
 
 
