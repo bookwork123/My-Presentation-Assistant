@@ -13,27 +13,23 @@ def openCamera(camType, frame_queue, state):
     if not capture.isOpened():
         print("ERROR: Camera never opened.")
         state["cam"] = False
-    try:
-        while True:
-            ret, frame = capture.read()
 
-            if not ret:
-                state["cam"] = False
-                print("ERROR: Cannot receive frame. Exiting...")
-            
-            frame = cv.cvtColor(frame, cv.COLOR_BGR2RGB)
+    while True:
+        ret, frame = capture.read()
 
-            timestamp_ms = int(time.monotonic() * 1000)
+        if not ret:
+            state["cam"] = False
+            print("ERROR: Cannot receive frame. Exiting...")
+        
+        frame = cv.cvtColor(frame, cv.COLOR_BGR2RGB)
 
-            if frame_queue.full():
-                try:
-                    frame_queue.get_nowait()
-                except:
-                    pass
+        timestamp_ms = int(time.monotonic() * 1000)
+
+        if frame_queue.full():
+            try:
+                frame_queue.get_nowait()
+            except:
+                pass
 
 
-            frame_queue.put((frame, timestamp_ms))
-    except KeyboardInterrupt:
-        #NOTE: Press Ctrl+C to end the program at the moment. GUI implementation will add a stop button.
-        capture.release()
-        cv.destroyAllWindows
+        frame_queue.put((frame, timestamp_ms))
