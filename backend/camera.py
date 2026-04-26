@@ -1,8 +1,6 @@
 ### Camera Opening & Operation
-import numpy as np
 import cv2 as cv
 import time
-from queue import Queue
 
 ### Opens the webcam and adds frames to the global queue
 def openCamera(camType, frame_queue, state):
