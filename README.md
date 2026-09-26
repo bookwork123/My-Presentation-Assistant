@@ -25,11 +25,17 @@ When you first run the executable, Windows Defender SmartScreen may show a warni
 - Windows audio endpoint available (for volume and mute gestures).
 - If the executable fails due to missing runtime DLLs, install the [Microsoft Visual C++ Redistributable (x64)](https://learn.microsoft.com/en-us/cpp/windows/latest-supported-vc-redist).
 
-## Gestures
+## Controls
 
-- **Open Palm** / **Closed Fist** — move slides forward / back.
-- **Thumb Up** / **Thumb Down** — adjust system volume.
-- **Pointing Up** — toggle mute.
+| Gesture | Action |
+|---------|--------|
+| Open Palm | Next slide |
+| Closed Fist | Previous slide |
+| Thumb Up | Volume up |
+| Thumb Down | Volume down |
+| Pointing Up | Toggle mute |
+| Victory (peace sign) | Pause / unpause gesture recognition |
+| ILoveYou (ASL sign) | Exit the application |
 
 ## Building from Source
 
