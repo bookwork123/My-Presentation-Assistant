@@ -42,4 +42,4 @@ Invoke-CheckedCommand -FilePath $VenvPython -Arguments @("-m", "PyInstaller", "-
 
 Write-Host ""
 Write-Host "Build complete."
-Write-Host "Output directory: $(Join-Path $RepoRoot 'dist\\PresentationAssistant')"
+Write-Host "Output directory: $(Join-Path $RepoRoot 'dist\\MyPresentationAssistant')"

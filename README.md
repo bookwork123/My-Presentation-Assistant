@@ -6,9 +6,9 @@ Control presentation slides and system audio using hand gestures detected from y
 
 **[Download the latest release](https://github.com/bookwork123/My-Presentation-Assistant/releases/latest)**
 
-1. Download `PresentationAssistant-windows.zip` from the link above.
+1. Download `MyPresentationAssistant-windows.zip` from the link above.
 2. Extract the zip to a folder of your choice.
-3. Run `PresentationAssistant.exe`.
+3. Run `MyPresentationAssistant.exe`.
 
 ## Platform Support
 
@@ -42,4 +42,4 @@ If you prefer to build the executable yourself:
 powershell -ExecutionPolicy Bypass -File .\scripts\build.ps1 -Clean
 ```
 
-Output: `dist/PresentationAssistant/PresentationAssistant.exe`
+Output: `dist/MyPresentationAssistant/MyPresentationAssistant.exe`

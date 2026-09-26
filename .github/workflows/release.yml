@@ -30,10 +30,10 @@ jobs:
         run: python -m PyInstaller --noconfirm --clean PresentationAssistant.spec
 
       - name: Create zip archive
-        run: Compress-Archive -Path dist\PresentationAssistant\* -DestinationPath PresentationAssistant-windows.zip
+        run: Compress-Archive -Path dist\MyPresentationAssistant\* -DestinationPath MyPresentationAssistant-windows.zip
 
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
         with:
-          files: PresentationAssistant-windows.zip
+          files: MyPresentationAssistant-windows.zip
           generate_release_notes: true
