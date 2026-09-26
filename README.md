@@ -14,6 +14,10 @@ Control presentation slides and system audio using hand gestures detected from y
 
 - Windows only (uses COM APIs through `pycaw`/`comtypes`).
 
+## Note on Windows SmartScreen
+
+When you first run the executable, Windows Defender SmartScreen may show a warning ("Windows protected your PC"). This happens because the executable is not code-signed. Click **More info** then **Run anyway** to proceed.
+
 ## Runtime Prerequisites
 
 - Webcam access enabled for desktop apps.
